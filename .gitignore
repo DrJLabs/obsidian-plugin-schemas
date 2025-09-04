@@ -1,0 +1,9 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+# Obsidian cache
+.obsidian/workspace.json
+# Ignore nested git metadata from cloned plugin repos
+**/.git
