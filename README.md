@@ -22,7 +22,7 @@ Canonical JSON Schemas and configuration guides for popular Obsidian plugins. Th
 | Editing Toolbar | editing-toolbar | 3.1.18 | `obsidian-editing-toolbar/schema/editing-toolbar.settings.schema.json` | `obsidian-editing-toolbar/CONFIGURATION.md` |
 | Commander | cmdr | 0.5.4 | `obsidian-commander/schema/commander.settings.schema.json` | `obsidian-commander/CONFIGURATION.md` |
 | Quick Switcher++ | darlal-switcher-plus | 5.3.1 | `obsidian-switcher-plus/schema/switcher-plus.settings.schema.json` | `obsidian-switcher-plus/CONFIGURATION.md` |
-| Local REST API | obsidian-local-rest-api | 3.2.0 | `obsidian-local-rest-api/schema/local-rest-api.settings.schema.json` | `obsidian-local-rest-api/CONFIGURATION.md` |
+| Local REST API | obsidian-local-rest-api | 3.2.0 | `local-rest-api-config-schema.md` | `local-rest-api-config-schema.md` |
 
 ## Combined Config + Schema Bundles
 
