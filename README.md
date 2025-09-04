@@ -22,6 +22,27 @@ Canonical JSON Schemas and configuration guides for popular Obsidian plugins. Th
 | Editing Toolbar | editing-toolbar | 3.1.18 | `obsidian-editing-toolbar/schema/editing-toolbar.settings.schema.json` | `obsidian-editing-toolbar/CONFIGURATION.md` |
 | Commander | cmdr | 0.5.4 | `obsidian-commander/schema/commander.settings.schema.json` | `obsidian-commander/CONFIGURATION.md` |
 | Quick Switcher++ | darlal-switcher-plus | 5.3.1 | `obsidian-switcher-plus/schema/switcher-plus.settings.schema.json` | `obsidian-switcher-plus/CONFIGURATION.md` |
+| Local REST API | obsidian-local-rest-api | 3.2.0 | `local-rest-api-config-schema.md` | `local-rest-api-config-schema.md` |
+
+## Combined Config + Schema Bundles
+
+Self‑contained files for AI agents or provisioning scripts. Each includes a short configuration guide and the full JSON Schema.
+
+- Homepage: `homepage-config-schema.md`
+- Quick Switcher++: `switcher-plus-config-schema.md`
+- Calendar: `calendar-config-schema.md`
+- Meta Bind: `meta-bind-config-schema.md`
+- Copilot: `copilot-config-schema.md`
+- Style Settings: `style-settings-config-schema.md`
+- Templater: `templater-config-schema.md`
+- Dataview: `dataview-config-schema.md`
+- QuickAdd: `quickadd-config-schema.md`
+- Editing Toolbar: `editing-toolbar-config-schema.md`
+- Tasks: `tasks-config-schema.md`
+- Commander: `commander-config-schema.md`
+- Kanban: `kanban-config-schema.md`
+- Age Encrypt: `age-encrypt-config-schema.md`
+- Local REST API: `local-rest-api-config-schema.md`
 
 ## Usage
 - Validate a plugin settings file: point your JSON tooling at the matching schema path.
