@@ -8,20 +8,13 @@ Canonical JSON Schemas and configuration guides for popular Obsidian plugins. Th
 
 | Plugin | ID | Version | Schema | Guide |
 |---|---|---:|---|---|
-| Dataview | 
-dataview | 0.5.68 | `obsidian-dataview/schema/dataview.settings.schema.json` | `obsidian-dataview/CONFIGURATION.md` |
-| Kanban | 
-obsidian-kanban | 2.0.51 | `obsidian-kanban/schema/kanban.settings.schema.json` | `obsidian-kanban/CONFIGURATION.md` |
-| Meta Bind | 
-obsidian-meta-bind-plugin | 1.4.5 | `obsidian-meta-bind-plugin/schema/meta-bind.settings.schema.json` | `obsidian-meta-bind-plugin/CONFIGURATION.md` |
-| Style Settings | 
-obsidian-style-settings | 1.0.9 | `obsidian-style-settings/schema/style-settings.schema.json` | `obsidian-style-settings/CONFIGURATION.md` |
-| Tasks | 
-obsidian-tasks-plugin | 7.21.0 | `obsidian-tasks/schema/tasks.settings.schema.json` | `obsidian-tasks/CONFIGURATION.md` |
-| QuickAdd | 
-quickadd | 2.1.0 | `quickadd/schema/quickadd.settings.schema.json` | `quickadd/CONFIGURATION.md` |
-| Templater | 
-templater-obsidian | 2.14.1 | `Templater/schema/templater.settings.schema.json` | `Templater/CONFIGURATION.md` |
+| Dataview | dataview | 0.5.68 | `obsidian-dataview/schema/dataview.settings.schema.json` | `obsidian-dataview/CONFIGURATION.md` |
+| Kanban | obsidian-kanban | 2.0.51 | `obsidian-kanban/schema/kanban.settings.schema.json` | `obsidian-kanban/CONFIGURATION.md` |
+| Meta Bind | obsidian-meta-bind-plugin | 1.4.5 | `obsidian-meta-bind-plugin/schema/meta-bind.settings.schema.json` | `obsidian-meta-bind-plugin/CONFIGURATION.md` |
+| Style Settings | obsidian-style-settings | 1.0.9 | `obsidian-style-settings/schema/style-settings.schema.json` | `obsidian-style-settings/CONFIGURATION.md` |
+| Tasks | obsidian-tasks-plugin | 7.21.0 | `obsidian-tasks/schema/tasks.settings.schema.json` | `obsidian-tasks/CONFIGURATION.md` |
+| QuickAdd | quickadd | 2.1.0 | `quickadd/schema/quickadd.settings.schema.json` | `quickadd/CONFIGURATION.md` |
+| Templater | templater-obsidian | 2.14.1 | `Templater/schema/templater.settings.schema.json` | `Templater/CONFIGURATION.md` |
 
 ## Usage
 - Validate a plugin settings file: point your JSON tooling at the matching schema path.
