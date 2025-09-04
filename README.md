@@ -15,6 +15,9 @@ Canonical JSON Schemas and configuration guides for popular Obsidian plugins. Th
 | Tasks | obsidian-tasks-plugin | 7.21.0 | `obsidian-tasks/schema/tasks.settings.schema.json` | `obsidian-tasks/CONFIGURATION.md` |
 | QuickAdd | quickadd | 2.1.0 | `quickadd/schema/quickadd.settings.schema.json` | `quickadd/CONFIGURATION.md` |
 | Templater | templater-obsidian | 2.14.1 | `Templater/schema/templater.settings.schema.json` | `Templater/CONFIGURATION.md` |
+| Age Encrypt | age-encrypt | 1.2.0 | `obsidian-age-encrypt/schema/age-encrypt.settings.schema.json` | `obsidian-age-encrypt/CONFIGURATION.md` |
+| Copilot | copilot | 3.0.2 | `obsidian-copilot/schema/copilot.settings.schema.json` | `obsidian-copilot/CONFIGURATION.md` |
+| Calendar | calendar | 1.5.10 | `obsidian-calendar-plugin/schema/calendar.settings.schema.json` | `obsidian-calendar-plugin/CONFIGURATION.md` |
 
 ## Usage
 - Validate a plugin settings file: point your JSON tooling at the matching schema path.
