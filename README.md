@@ -18,6 +18,10 @@ Canonical JSON Schemas and configuration guides for popular Obsidian plugins. Th
 | Age Encrypt | age-encrypt | 1.2.0 | `obsidian-age-encrypt/schema/age-encrypt.settings.schema.json` | `obsidian-age-encrypt/CONFIGURATION.md` |
 | Copilot | copilot | 3.0.2 | `obsidian-copilot/schema/copilot.settings.schema.json` | `obsidian-copilot/CONFIGURATION.md` |
 | Calendar | calendar | 1.5.10 | `obsidian-calendar-plugin/schema/calendar.settings.schema.json` | `obsidian-calendar-plugin/CONFIGURATION.md` |
+| Homepage | homepage | 4.2.2 | `obsidian-homepage/schema/homepage.settings.schema.json` | `obsidian-homepage/CONFIGURATION.md` |
+| Editing Toolbar | editing-toolbar | 3.1.18 | `obsidian-editing-toolbar/schema/editing-toolbar.settings.schema.json` | `obsidian-editing-toolbar/CONFIGURATION.md` |
+| Commander | cmdr | 0.5.4 | `obsidian-commander/schema/commander.settings.schema.json` | `obsidian-commander/CONFIGURATION.md` |
+| Quick Switcher++ | darlal-switcher-plus | 5.3.1 | `obsidian-switcher-plus/schema/switcher-plus.settings.schema.json` | `obsidian-switcher-plus/CONFIGURATION.md` |
 
 ## Usage
 - Validate a plugin settings file: point your JSON tooling at the matching schema path.
