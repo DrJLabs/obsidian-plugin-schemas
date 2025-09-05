@@ -29,6 +29,9 @@ Key Defaults
 - `buttonTemplates`: []
 - `excludedFolders`: ["templates"]
 
+Allowed Values Summary
+- `ButtonStyleType`: `default`, `primary`, `destructive`, `plain` (see schema `$defs`).
+
 data.json (complete defaults)
 ```json
 {
@@ -146,4 +149,3 @@ Source Pointers
   }
 }
 ```
-

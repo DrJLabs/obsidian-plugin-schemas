@@ -66,7 +66,16 @@ Schema coverage
   - `metadata-keys`: array of objects with `metadataKey`, `label`, `shouldHideLabel`, `containsMarkdown`.
   - `tag-colors`: array of `{ tagKey, color, backgroundColor }`.
   - `tag-sort`: array of `{ tag }` defining custom order.
-  - `date-colors`: array of rules matching relative dates with `unit`, `direction`, and colors.
+- `date-colors`: array of rules matching relative dates with `unit`, `direction`, and colors.
+
+Allowed Values Summary
+- `kanban-plugin` (board format): `basic`, `board`, `table`, `list`.
+- `inline-metadata-position`: `body`, `footer`, `metadata-table`.
+- `date-colors[].unit`: `hours`, `days`, `weeks`, `months`.
+- `date-colors[].direction`: `before`, `after`.
+- `new-card-insertion-method`: `prepend`, `prepend-compact`, `append`.
+- `new-line-trigger`: `enter`, `shift-enter`.
+- `tag-action`: `kanban`, `obsidian`.
 
 Defaults and behavior (source‑derived)
 - Unset keys are compiled with defaults where applicable:
@@ -204,4 +213,3 @@ Source Pointers
   }
 }
 ```
-

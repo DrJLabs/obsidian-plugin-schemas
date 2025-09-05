@@ -75,6 +75,11 @@ Notes
 - `statusSettings`: arrays of status configurations; you can pre‑seed custom statuses here.
 - `loggingOptions.minLevels`: keys are logger names (prefix matches); values one of: `trace`, `debug`, `info`, `warn`, `error`.
 
+Allowed Values Summary
+- `taskFormat`: one of `tasksPluginEmoji`, `dataview`.
+- `statusSettings[].type`: one of `TODO`, `DONE`, `IN_PROGRESS`, `CANCELLED`, `NON_TASK`, `EMPTY`.
+- `loggingOptions.minLevels[*]`: one of `trace`, `debug`, `info`, `warn`, `error`.
+
 Provisioning Steps
 - Write `data.json` using the schema above and reload the plugin.
 - If you modify `statusSettings`, call Tasks’ “Reload custom statuses” in UI or reload Obsidian to apply.
@@ -131,39 +136,38 @@ Source Pointers
     }
   },
   "properties": {
-    "presets": {"type": "object", "additionalProperties": {"type": "string"}, "default": {}},
-    "globalQuery": {"type": "string", "default": ""},
-    "globalFilter": {"type": "string", "default": ""},
-    "removeGlobalFilter": {"type": "boolean", "default": false},
-    "taskFormat": {"type": "string", "enum": ["tasksPluginEmoji", "dataview"], "default": "tasksPluginEmoji"},
-    "setCreatedDate": {"type": "boolean", "default": false},
-    "setDoneDate": {"type": "boolean", "default": true},
-    "setCancelledDate": {"type": "boolean", "default": true},
-    "autoSuggestInEditor": {"type": "boolean", "default": true},
-    "autoSuggestMinMatch": {"type": "integer", "default": 0},
-    "autoSuggestMaxItems": {"type": "integer", "default": 20},
-    "provideAccessKeys": {"type": "boolean", "default": true},
-    "useFilenameAsScheduledDate": {"type": "boolean", "default": false},
-    "filenameAsScheduledDateFormat": {"type": "string", "default": ""},
-    "filenameAsDateFolders": {"type": "array", "items": {"type": "string"}, "default": []},
-    "recurrenceOnNextLine": {"type": "boolean", "default": false},
-    "removeScheduledDateOnRecurrence": {"type": "boolean", "default": false},
-    "statusSettings": {"$ref": "#/$defs/StatusSettings"},
-    "features": {"type": "object", "additionalProperties": {"type": "boolean"}, "default": {}},
-    "generalSettings": {"type": "object", "additionalProperties": {"type": ["string", "boolean"]}, "default": {}},
-    "headingOpened": {"type": "object", "additionalProperties": {"type": "boolean"}, "default": {}},
+    "presets": {"type": "object", "description": "Named query snippets: key → Tasks query string.", "additionalProperties": {"type": "string"}, "default": {}},
+    "globalQuery": {"type": "string", "description": "Query lines applied globally to all Tasks views.", "default": ""},
+    "globalFilter": {"type": "string", "description": "Global filter string/tag to include or exclude tasks.", "default": ""},
+    "removeGlobalFilter": {"type": "boolean", "description": "Remove the global filter text from rendered task lines.", "default": false},
+    "taskFormat": {"type": "string", "description": "Task metadata format used for status/date annotations.", "enum": ["tasksPluginEmoji", "dataview"], "default": "tasksPluginEmoji"},
+    "setCreatedDate": {"type": "boolean", "description": "Automatically set the created date on new tasks.", "default": false},
+    "setDoneDate": {"type": "boolean", "description": "Automatically set the done date when a task is completed.", "default": true},
+    "setCancelledDate": {"type": "boolean", "description": "Automatically set the cancelled date when a task is cancelled.", "default": true},
+    "autoSuggestInEditor": {"type": "boolean", "description": "Enable editor auto-suggest for Tasks queries and metadata.", "default": true},
+    "autoSuggestMinMatch": {"type": "integer", "description": "Minimum characters before showing auto-suggest.", "minimum": 0, "default": 0},
+    "autoSuggestMaxItems": {"type": "integer", "description": "Maximum number of auto-suggest items to display.", "minimum": 1, "default": 20},
+    "provideAccessKeys": {"type": "boolean", "description": "Enable access keys for interactive task views in the UI.", "default": true},
+    "useFilenameAsScheduledDate": {"type": "boolean", "description": "Infer scheduled date from filename using the configured format.", "default": false},
+    "filenameAsScheduledDateFormat": {"type": "string", "description": "Date format string used to parse a scheduled date from the filename.", "default": ""},
+    "filenameAsDateFolders": {"type": "array", "description": "Folder names to treat as date components when parsing from path.", "items": {"type": "string"}, "default": []},
+    "recurrenceOnNextLine": {"type": "boolean", "description": "Place recurrence rule on the line after the task.", "default": false},
+    "removeScheduledDateOnRecurrence": {"type": "boolean", "description": "Remove scheduled date when creating the next recurring instance.", "default": false},
+    "statusSettings": {"$ref": "#/$defs/StatusSettings", "description": "Core and custom status definitions available to tasks."},
+    "features": {"type": "object", "description": "Feature flags keyed by internal feature name.", "additionalProperties": {"type": "boolean"}, "default": {}},
+    "generalSettings": {"type": "object", "description": "Miscellaneous plugin options not covered elsewhere.", "additionalProperties": {"type": ["string", "boolean"]}, "default": {}},
+    "headingOpened": {"type": "object", "description": "Persisted map of heading collapse states.", "additionalProperties": {"type": "boolean"}, "default": {}},
     "debugSettings": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "ignoreSortInstructions": {"type": "boolean", "default": false},
-        "showTaskHiddenData": {"type": "boolean", "default": false},
-        "recordTimings": {"type": "boolean", "default": false}
+        "ignoreSortInstructions": {"type": "boolean", "description": "Ignore sort instructions when rendering views (debug).", "default": false},
+        "showTaskHiddenData": {"type": "boolean", "description": "Reveal hidden task metadata in rendered views (debug).", "default": false},
+        "recordTimings": {"type": "boolean", "description": "Record timing metrics for internal operations (debug).", "default": false}
       },
       "required": ["ignoreSortInstructions", "showTaskHiddenData", "recordTimings"]
     },
-    "loggingOptions": {"$ref": "#/$defs/LogOptions"}
+    "loggingOptions": {"$ref": "#/$defs/LogOptions", "description": "Minimum log levels per logger name prefix."}
   }
 }
 ```
-

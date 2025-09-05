@@ -25,6 +25,10 @@ Settings (defaults from `src/settings.ts`)
 - `weeklyNoteFolder` (string, default `""`): Destination folder for weekly notes.
 - `localeOverride` (string, default `system-default`): Moment locale override or `system-default`.
 
+Allowed Values Summary
+- `weekStart`: one of `locale`, `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
+- `localeOverride`: typically a BCP‑47 locale (e.g., `en-US`), or `system-default` to use the OS locale.
+
 data.json (example)
 ```json
 {
@@ -54,15 +58,14 @@ Source Pointers
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "wordsPerDot": {"type": "number", "default": 250},
-    "weekStart": {"type": "string", "enum": ["locale", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], "default": "locale"},
-    "shouldConfirmBeforeCreate": {"type": "boolean", "default": true},
-    "showWeeklyNote": {"type": "boolean", "default": false},
-    "weeklyNoteFormat": {"type": "string", "default": ""},
-    "weeklyNoteTemplate": {"type": "string", "default": ""},
-    "weeklyNoteFolder": {"type": "string", "default": ""},
-    "localeOverride": {"type": "string", "default": "system-default"}
+    "wordsPerDot": {"type": "number", "description": "Number of words represented by a single activity dot.", "minimum": 1, "default": 250},
+    "weekStart": {"type": "string", "description": "Start of week for calendar view.", "enum": ["locale", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], "default": "locale"},
+    "shouldConfirmBeforeCreate": {"type": "boolean", "description": "Show a confirmation dialog before creating daily/weekly notes.", "default": true},
+    "showWeeklyNote": {"type": "boolean", "description": "Enable weekly notes UI and features.", "default": false},
+    "weeklyNoteFormat": {"type": "string", "description": "Format string for weekly note titles.", "default": ""},
+    "weeklyNoteTemplate": {"type": "string", "description": "Path to the template file for weekly notes.", "default": ""},
+    "weeklyNoteFolder": {"type": "string", "description": "Folder where weekly notes are created.", "default": ""},
+    "localeOverride": {"type": "string", "description": "Explicit locale to use (e.g., en-US), or 'system-default' to inherit OS locale.", "default": "system-default"}
   }
 }
 ```
-

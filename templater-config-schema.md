@@ -30,6 +30,9 @@ Key Defaults (source‑derived)
 - `startup_templates`: [""]
 - `intellisense_render`: 1 (Description+Parameters+Return)
 
+Allowed Values Summary
+- `intellisense_render`: 0=Off, 1=Description+Params+Return, 2=Description+Param list, 3=Description+Return, 4=Description only.
+
 data.json (minimal defaults)
 ```json
 {
@@ -97,4 +100,3 @@ Source Pointers
   }
 }
 ```
-
