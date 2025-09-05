@@ -32,6 +32,12 @@ HomepageData keys
 - `alwaysApply`: boolean; apply homepage settings when opening the file normally.
 - `hideReleaseNotes`: boolean; suppress Obsidian release notes on update.
 
+Allowed Values Summary
+- `kind`: `File`, `Workspace`, `Random file`, `Random in folder`, `Graph view`, `Nothing`, `Journal`, `Daily Note`, `Weekly Note`, `Monthly Note`, `Yearly Note`.
+- `openMode`/`manualOpenMode`: `Replace all open notes`, `Replace last note`, `Keep open notes`.
+- `view`: `Default view`, `Reading view`, `Editing view (Source)`, `Editing view (Live Preview)`.
+- `commands[].period`: `Both`, `Startup only`, `Manual only`.
+
 data.json (minimal example)
 ```json
 {
@@ -122,4 +128,3 @@ Source Pointers
   "required": ["version", "homepages", "separateMobile"]
 }
 ```
-

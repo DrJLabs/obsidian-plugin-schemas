@@ -22,6 +22,13 @@ Highlights
 - Hotkeys: multiple `Hotkey` objects; modelled as `{ modifiers: string[], key: string }`.
 - Feature configs: `insertLinkInEditor`, `navigationKeys`, `renderMarkdownContentInSuggestions`, `quickOpen`, `openDefaultApp`, `fulltextSearch`, `openInBackground`, `mobileLauncher`.
 
+Allowed Values Summary
+- `RelationType` (related items): `disk-location`, `backlink`, `outgoing-link`.
+- `TitleSource`: `Default`, `H1`.
+- `ModeName`: `Standard`, `EditorList`, `SymbolList`, `WorkspaceList`, `HeadingsList`, `BookmarksList`, `CommandList`, `RelatedItemsList`, `VaultList`.
+- `recentCommandDisplayOrder`: `desc`, `asc`.
+- `pathDisplayFormat`: integers `0..4` (see plugin docs for formats).
+
 data.json (minimal scaffold)
 ```json
 {
@@ -76,7 +83,7 @@ Source Pointers
     "headingsListCommand": {"type": "string"},
     "bookmarksListCommand": {"type": "string"},
     "commandListCommand": {"type": "string"},
-    "recentCommandDisplayOrder": {"enum": ["desc", "asc"]},
+    "recentCommandDisplayOrder": {"enum": ["desc", "asc"], "description": "Sort order for recent commands list."},
     "maxRecentCommands": {"type": "number"},
     "vaultListCommand": {"type": "string"},
     "relatedItemsListCommand": {"type": "string"},
@@ -99,7 +106,7 @@ Source Pointers
     "shouldSearchFilenames": {"type": "boolean"},
     "shouldSearchBookmarks": {"type": "boolean"},
     "shouldSearchRecentFiles": {"type": "boolean"},
-    "pathDisplayFormat": {"type": "integer", "enum": [0,1,2,3,4]},
+    "pathDisplayFormat": {"type": "integer", "description": "How to render file paths in results (0..4).", "enum": [0,1,2,3,4]},
     "hidePathIfRoot": {"type": "boolean"},
     "enabledRelatedItems": {"type": "array", "items": {"$ref": "#/$defs/RelationType"}},
     "showOptionalIndicatorIcons": {"type": "boolean"},
@@ -136,4 +143,3 @@ Source Pointers
   }
 }
 ```
-

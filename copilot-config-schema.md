@@ -52,6 +52,13 @@ Source Pointers
 - Settings shape and sanitizer: `src/settings/model.ts`
 - Key encryption: `src/encryptionService.ts`
 
+Allowed Values Summary
+- `defaultChainType`: `llm_chain`, `vault_qa`, `copilot_plus`, `project`.
+- `defaultOpenArea`: `editor` or `view`.
+- `indexVaultToVectorStore`: `NEVER`, `ON STARTUP`, `ON MODE SWITCH`.
+- `reasoningEffort`: `minimal`, `low`, `medium`, `high`.
+- `verbosity`: `low`, `medium`, `high`.
+
 ## Settings Schema (JSON)
 
 ```json
@@ -90,8 +97,8 @@ Source Pointers
         "dimensions": {"type": "number"},
         "displayName": {"type": "string"},
         "capabilities": {"type": "array", "items": {"type": "string"}},
-        "reasoningEffort": {"type": "string", "enum": ["minimal", "low", "medium", "high"]},
-        "verbosity": {"type": "string", "enum": ["low", "medium", "high"]}
+        "reasoningEffort": {"type": "string", "description": "Model reasoning budget (if provider supports it).", "enum": ["minimal", "low", "medium", "high"]},
+        "verbosity": {"type": "string", "description": "Model output verbosity preference.", "enum": ["low", "medium", "high"]}
       },
       "required": ["name", "provider", "enabled"]
     },
@@ -147,7 +154,7 @@ Source Pointers
     "xaiApiKey": {"type": "string"},
     "mistralApiKey": {"type": "string"},
     "deepseekApiKey": {"type": "string"},
-    "defaultChainType": {"type": "string", "enum": ["llm_chain", "vault_qa", "copilot_plus", "project"]},
+    "defaultChainType": {"type": "string", "description": "Default chain type used when creating a new chat.", "enum": ["llm_chain", "vault_qa", "copilot_plus", "project"]},
     "defaultModelKey": {"type": "string"},
     "embeddingModelKey": {"type": "string"},
     "temperature": {"type": "number"},
@@ -161,9 +168,9 @@ Source Pointers
     "defaultConversationTag": {"type": "string"},
     "autosaveChat": {"type": "boolean"},
     "includeActiveNoteAsContext": {"type": "boolean"},
-    "defaultOpenArea": {"type": "string", "enum": ["editor", "view"]},
+    "defaultOpenArea": {"type": "string", "description": "Where to open the Copilot UI by default.", "enum": ["editor", "view"]},
     "customPromptsFolder": {"type": "string"},
-    "indexVaultToVectorStore": {"type": "string", "enum": ["NEVER", "ON STARTUP", "ON MODE SWITCH"]},
+    "indexVaultToVectorStore": {"type": "string", "description": "When to index the vault into the vector store.", "enum": ["NEVER", "ON STARTUP", "ON MODE SWITCH"]},
     "qaExclusions": {"type": "string"},
     "qaInclusions": {"type": "string"},
     "chatNoteContextPath": {"type": "string"},
@@ -181,7 +188,7 @@ Source Pointers
     "showSuggestedPrompts": {"type": "boolean"},
     "showRelevantNotes": {"type": "boolean"},
     "numPartitions": {"type": "number"},
-    "lexicalSearchRamLimit": {"type": "number", "minimum": 20, "maximum": 1000},
+    "lexicalSearchRamLimit": {"type": "number", "description": "RAM limit for lexical search in MB.", "minimum": 20, "maximum": 1000},
     "promptUsageTimestamps": {"type": "object", "additionalProperties": {"type": "number"}},
     "promptSortStrategy": {"type": "string"},
     "defaultConversationNoteName": {"type": "string"},
@@ -198,11 +205,10 @@ Source Pointers
     "enableSemanticSearchV3": {"type": "boolean"},
     "enableLexicalBoosts": {"type": "boolean"},
     "suggestedDefaultCommands": {"type": "boolean"},
-    "autonomousAgentMaxIterations": {"type": "number", "minimum": 4, "maximum": 8},
+    "autonomousAgentMaxIterations": {"type": "number", "description": "Max steps the autonomous agent may take per run.", "minimum": 4, "maximum": 8},
     "autonomousAgentEnabledToolIds": {"type": "array", "items": {"type": "string"}},
-    "reasoningEffort": {"type": "string", "enum": ["minimal", "low", "medium", "high"]},
-    "verbosity": {"type": "string", "enum": ["low", "medium", "high"]}
+    "reasoningEffort": {"type": "string", "description": "Model reasoning budget (if provider supports it).", "enum": ["minimal", "low", "medium", "high"]},
+    "verbosity": {"type": "string", "description": "Model output verbosity preference.", "enum": ["low", "medium", "high"]}
   }
 }
 ```
-

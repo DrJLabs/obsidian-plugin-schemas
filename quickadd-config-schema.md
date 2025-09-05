@@ -30,6 +30,14 @@ Key Defaults (source‑derived)
 - `showCaptureNotification`: true
 - `ai.defaultModel`: "Ask me"; `ai.showAssistant`: true; `ai.providers`: `DefaultProviders`
 
+Allowed Values Summary
+- `inputPrompt`: `single-line` or `multi-line`.
+- `OpenLocation` (for file opening): `reuse`, `tab`, `split`, `window`, `left-sidebar`, `right-sidebar`.
+- `FileViewMode2.mode`: `preview`, `source`, `live`, `live-preview`, or `default`.
+- `appendLink.placement`: `replaceSelection`, `afterSelection`, `endOfLine`, `newLine`.
+- `newLineCapture.direction`: `above` or `below`.
+- `fileOpening.direction`: `vertical` or `horizontal`.
+
 data.json (minimal scaffold)
 ```json
 {
@@ -109,18 +117,18 @@ Source Pointers
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "name": {"type": "string"},
-        "endpoint": {"type": "string"},
-        "apiKey": {"type": "string"},
+        "name": {"type": "string", "description": "Provider display name (e.g., OpenAI, Local-OAI)."},
+        "endpoint": {"type": "string", "description": "Base URL for the provider API endpoint."},
+        "apiKey": {"type": "string", "description": "API key or token; store locally only."},
         "models": {
           "type": "array",
-          "items": {"type": "object", "properties": {"name": {"type": "string"}, "maxTokens": {"type": "integer", "minimum": 1}}, "required": ["name", "maxTokens"], "additionalProperties": false}
+          "items": {"type": "object", "properties": {"name": {"type": "string", "description": "Model identifier"}, "maxTokens": {"type": "integer", "minimum": 1, "description": "Maximum token limit for this model"}}, "required": ["name", "maxTokens"], "additionalProperties": false}
         },
-        "autoSyncModels": {"type": "boolean"}
+        "autoSyncModels": {"type": "boolean", "description": "Automatically refresh models from the provider"}
       },
       "required": ["name", "endpoint", "apiKey", "models"]
     },
-    "OpenLocation": {"enum": ["reuse", "tab", "split", "window", "left-sidebar", "right-sidebar"]},
+    "OpenLocation": {"enum": ["reuse", "tab", "split", "window", "left-sidebar", "right-sidebar"], "description": "Where to open the target file/view."},
     "FileViewMode2": {"anyOf": [
       {"enum": ["preview", "source", "live", "live-preview", "default"]},
       {"type": "object", "properties": {"mode": {"enum": ["preview"]}}, "required": ["mode"], "additionalProperties": true},
@@ -175,8 +183,8 @@ Source Pointers
     }
   },
   "properties": {
-    "choices": {"type": "array", "items": {"$ref": "#/$defs/Choice"}},
-    "inputPrompt": {"enum": ["multi-line", "single-line"], "default": "single-line"},
+    "choices": {"type": "array", "description": "Configured QuickAdd choices (Capture, Template, Macro, Multi).", "items": {"$ref": "#/$defs/Choice"}},
+    "inputPrompt": {"enum": ["multi-line", "single-line"], "description": "Prompt input mode for QuickAdd dialogs.", "default": "single-line"},
     "devMode": {"type": "boolean", "default": false},
     "templateFolderPath": {"type": "string", "default": ""},
     "announceUpdates": {"type": "boolean", "default": true},
@@ -189,11 +197,11 @@ Source Pointers
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "defaultModel": {"type": "string", "default": "Ask me"},
-        "defaultSystemPrompt": {"type": "string"},
-        "promptTemplatesFolderPath": {"type": "string", "default": ""},
-        "showAssistant": {"type": "boolean", "default": true},
-        "providers": {"type": "array", "items": {"$ref": "#/$defs/AIProvider"}}
+        "defaultModel": {"type": "string", "description": "Default model label to suggest in UI.", "default": "Ask me"},
+        "defaultSystemPrompt": {"type": "string", "description": "System prompt text to prepend for AI actions."},
+        "promptTemplatesFolderPath": {"type": "string", "description": "Folder containing AI prompt templates.", "default": ""},
+        "showAssistant": {"type": "boolean", "description": "Show the assistant UI within QuickAdd.", "default": true},
+        "providers": {"type": "array", "description": "Configured AI providers.", "items": {"$ref": "#/$defs/AIProvider"}}
       },
       "required": ["defaultModel", "defaultSystemPrompt", "promptTemplatesFolderPath", "showAssistant", "providers"]
     },
@@ -201,17 +209,16 @@ Source Pointers
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "migrateToMacroIDFromEmbeddedMacro": {"type": "boolean"},
-        "useQuickAddTemplateFolder": {"type": "boolean"},
-        "incrementFileNameSettingMoveToDefaultBehavior": {"type": "boolean"},
-        "mutualExclusionInsertAfterAndWriteToBottomOfFile": {"type": "boolean"},
-        "setVersionAfterUpdateModalRelease": {"type": "boolean"},
-        "addDefaultAIProviders": {"type": "boolean"},
-        "removeMacroIndirection": {"type": "boolean"},
-        "migrateFileOpeningSettings": {"type": "boolean"}
+        "migrateToMacroIDFromEmbeddedMacro": {"type": "boolean", "description": "One-time migration flag for transitioning to Macro IDs."},
+        "useQuickAddTemplateFolder": {"type": "boolean", "description": "Whether to migrate to QuickAdd-specific template folder settings."},
+        "incrementFileNameSettingMoveToDefaultBehavior": {"type": "boolean", "description": "Migration flag for filename behavior changes."},
+        "mutualExclusionInsertAfterAndWriteToBottomOfFile": {"type": "boolean", "description": "Migration flag to enforce settings exclusivity."},
+        "setVersionAfterUpdateModalRelease": {"type": "boolean", "description": "Set version after update modal release."},
+        "addDefaultAIProviders": {"type": "boolean", "description": "Add default AI providers during migration if missing."},
+        "removeMacroIndirection": {"type": "boolean", "description": "Remove indirect macro references during migration."},
+        "migrateFileOpeningSettings": {"type": "boolean", "description": "Normalize file opening settings to new structure."}
       }
     }
   }
 }
 ```
-

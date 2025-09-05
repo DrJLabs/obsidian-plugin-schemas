@@ -23,6 +23,11 @@ Key Settings
 - Format brush toggles: `formatBrushes` (map of key → boolean).
 - Custom insert actions: `customCommands[]` with prefix/suffix or regex options.
 
+Allowed Values Summary
+- `aestheticStyle`: `default`, `tiny`, `glass`, `custom`.
+- `positionStyle`: `following`, `top`, `fixed`.
+- `appendMethod`: `body`, `workspace`.
+
 data.json (minimal scaffold)
 ```json
 {
@@ -92,15 +97,15 @@ Source Pointers
     "cMenuWidth": {"type": "number"},
     "cMenuFontColor": {"type": "string"},
     "cMenuBackgroundColor": {"type": "string"},
-    "aestheticStyle": {"type": "string", "enum": ["default", "tiny", "glass", "custom"]},
-    "positionStyle": {"type": "string", "enum": ["following", "top", "fixed"]},
+    "aestheticStyle": {"type": "string", "description": "Toolbar visual style preset.", "enum": ["default", "tiny", "glass", "custom"]},
+    "positionStyle": {"type": "string", "description": "Toolbar positioning mode.", "enum": ["following", "top", "fixed"]},
     "menuCommands": {"type": "array", "items": {"$ref": "#/$defs/Command"}},
     "followingCommands": {"type": "array", "items": {"$ref": "#/$defs/Command"}},
     "topCommands": {"type": "array", "items": {"$ref": "#/$defs/Command"}},
     "fixedCommands": {"type": "array", "items": {"$ref": "#/$defs/Command"}},
     "mobileCommands": {"type": "array", "items": {"$ref": "#/$defs/Command"}},
     "enableMultipleConfig": {"type": "boolean"},
-    "appendMethod": {"type": "string", "enum": ["body", "workspace"]},
+    "appendMethod": {"type": "string", "description": "Where to insert the toolbar container in the DOM.", "enum": ["body", "workspace"]},
     "shouldShowMenuOnSelect": {"type": "boolean"},
     "cMenuVisibility": {"type": "boolean"},
     "cMenuBottomValue": {"type": "number"},
@@ -129,4 +134,3 @@ Source Pointers
   }
 }
 ```
-
