@@ -16,11 +16,11 @@ class SettingsSnapshot extends Plugin {
       this.settings = defaults;
     }
 
-    this.registerEvent(this.app.workspace.on('layout-ready', () => {
-      window.setTimeout(() => {
-        this.snapshot().catch(e => console.error('[settings-snapshot] snapshot error', e));
-      }, this.settings.delayMs);
-    }));
+    // Schedule snapshot shortly after plugin load. This avoids missing the 'layout-ready' event
+    // in headless runs where plugins may load after layout.
+    window.setTimeout(() => {
+      this.snapshot().catch(e => console.error('[settings-snapshot] snapshot error', e));
+    }, this.settings.delayMs);
   }
 
   async snapshot() {
@@ -47,4 +47,3 @@ class SettingsSnapshot extends Plugin {
 }
 
 module.exports = SettingsSnapshot;
-

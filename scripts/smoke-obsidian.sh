@@ -13,15 +13,16 @@ set -euo pipefail
 #     --plugin-path /path/to/quickadd-dist --data sample-data.json
 
 usage() {
-  echo "Usage: $0 --bundle <bundle-id|file> --plugin-id <id> --plugin-path <path> --data <data.json> [--timeout <secs>] [--no-snapshot]" >&2
+  echo "Usage: $0 --bundle <bundle-id|file> --plugin-id <id> --data <data.json> [--plugin-path <path>] [--source-vault <vault>] [--timeout <secs>] [--no-snapshot]" >&2
 }
 
-BUNDLE=""; PID=""; PPATH=""; DATA=""; TIMEOUT="15"; VAULT=""; SNAPSHOT=1;
+BUNDLE=""; PID=""; PPATH=""; DATA=""; TIMEOUT="15"; VAULT=""; SOURCE_VAULT=""; SNAPSHOT=1;
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --bundle) BUNDLE="$2"; shift 2;;
     --plugin-id) PID="$2"; shift 2;;
     --plugin-path) PPATH="$2"; shift 2;;
+    --source-vault) SOURCE_VAULT="$2"; shift 2;;
     --data) DATA="$2"; shift 2;;
     --timeout) TIMEOUT="$2"; shift 2;;
     --no-snapshot) SNAPSHOT=0; shift 1;;
@@ -30,21 +31,41 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$BUNDLE" || -z "$PID" || -z "$PPATH" || -z "$DATA" ]]; then
+if [[ -z "$BUNDLE" || -z "$PID" || -z "$DATA" ]]; then
   usage; exit 2
 fi
 
 if [[ ! -f "$DATA" ]]; then echo "data file not found: $DATA" >&2; exit 2; fi
-if [[ ! -f "$PPATH/manifest.json" ]]; then echo "plugin path missing manifest.json: $PPATH" >&2; exit 2; fi
-if [[ ! -f "$PPATH/main.js" ]]; then echo "plugin path missing main.js (built plugin required): $PPATH" >&2; exit 2; fi
 
 ROOT="$(pwd)"
 VAULT="${VAULT:-$ROOT/.tmp/vault-$PID-$(date +%s)}"
 PLDIR="$VAULT/.obsidian/plugins/$PID"
+
+# If source vault provided, clone it first to preserve user's vault
+if [[ -n "$SOURCE_VAULT" ]]; then
+  echo "[smoke] Cloning source vault: $SOURCE_VAULT -> $VAULT"
+  rsync -a --delete "$SOURCE_VAULT/" "$VAULT/"
+fi
+
 mkdir -p "$PLDIR"
 
+# Resolve plugin path: prefer explicit --plugin-path, else copy from source vault if present
+if [[ -n "$PPATH" ]]; then
+  if [[ ! -f "$PPATH/manifest.json" || ! -f "$PPATH/main.js" ]]; then
+    echo "plugin path invalid (need manifest.json and main.js): $PPATH" >&2; exit 2
+  fi
+  rsync -a --delete "$PPATH/" "$PLDIR/"
+else
+  if [[ -n "$SOURCE_VAULT" && -d "$SOURCE_VAULT/.obsidian/plugins/$PID" ]]; then
+    echo "[smoke] Using plugin from source vault"
+    rsync -a --delete "$SOURCE_VAULT/.obsidian/plugins/$PID/" "$PLDIR/"
+  else
+    echo "No --plugin-path provided and plugin not found in source vault. Aborting." >&2
+    exit 2
+  fi
+fi
+
 echo "[smoke] Vault: $VAULT"
-rsync -a --delete "$PPATH/" "$PLDIR/"
 cp "$DATA" "$PLDIR/data.json"
 
 # Level 1: Schema validation pre-flight
@@ -80,6 +101,16 @@ if [[ "$SNAPSHOT" -eq 1 ]]; then
   "delayMs": 4000
 }
 JSON
+  # Ensure snapshot plugin is enabled
+  CPLUGS="$VAULT/.obsidian/community-plugins.json"
+  if [[ -f "$CPLUGS" ]]; then
+    if ! rg -q '"settings-snapshot"' "$CPLUGS"; then
+      tmpfile=$(mktemp)
+      jq '. + ["settings-snapshot"]' "$CPLUGS" > "$tmpfile" && mv "$tmpfile" "$CPLUGS"
+    fi
+  else
+    echo '["settings-snapshot"]' > "$CPLUGS"
+  fi
 fi
 
 xvfb-run -a "$BIN" --vault "$VAULT" &
