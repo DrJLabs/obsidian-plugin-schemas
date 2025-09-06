@@ -48,7 +48,7 @@ Source Pointers
   "description": "Programmatic configuration for the Commander plugin. Based on src/types.ts and src/constants.ts.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "CommandIconPair": {
       "type": "object",
       "additionalProperties": false,
@@ -115,4 +115,3 @@ Source Pointers
   }
 }
 ```
-

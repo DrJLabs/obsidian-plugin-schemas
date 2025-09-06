@@ -69,7 +69,7 @@ Allowed Values Summary
   "description": "Programmatic configuration for the Copilot plugin. Based on src/constants.ts and src/settings/model.ts. Sensitive keys may be encrypted at rest when enableEncryption=true.",
   "type": "object",
   "additionalProperties": true,
-  "definitions": {
+  "$defs": {
     "CustomModel": {
       "type": "object",
       "additionalProperties": true,

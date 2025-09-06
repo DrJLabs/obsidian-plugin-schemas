@@ -100,7 +100,7 @@ Source Pointers
   "description": "Programmatic configuration for the Tasks plugin (global data.json). Based on src/Config/Settings.ts and related types.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "StatusConfiguration": {
       "type": "object",
       "additionalProperties": false,

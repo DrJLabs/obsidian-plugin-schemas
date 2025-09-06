@@ -74,7 +74,7 @@ Source Pointers
   "description": "Programmatic configuration for Templater. Based on src/settings/Settings.ts.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "FolderTemplate": {"type": "object", "properties": {"folder": {"type": "string"}, "template": {"type": "string"}}, "required": ["folder", "template"], "additionalProperties": false},
     "FileTemplate": {"type": "object", "properties": {"regex": {"type": "string"}, "template": {"type": "string"}}, "required": ["regex", "template"], "additionalProperties": false},
     "IntellisenseRenderOption": {"type": "integer", "enum": [0,1,2,3,4], "description": "0=Off, 1=Description+Params+Return, 2=Description+Param list, 3=Description+Return, 4=Description only"}

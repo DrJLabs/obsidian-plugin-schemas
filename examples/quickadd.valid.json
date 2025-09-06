@@ -1,0 +1,10 @@
+{
+  "choices": [],
+  "inputPrompt": "single-line",
+  "devMode": false,
+  "announceUpdates": true,
+  "disableOnlineFeatures": true,
+  "enableRibbonIcon": false,
+  "showCaptureNotification": true
+}
+
