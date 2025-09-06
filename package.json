@@ -1,0 +1,16 @@
+{
+  "name": "obsidian-plugin-schemas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Canonical config+schema bundles for popular Obsidian plugins",
+  "license": "MIT",
+  "scripts": {
+    "build:enums": "node scripts/build-enum-index.js",
+    "validate": "node scripts/validate.js",
+    "smoke": "bash scripts/smoke-obsidian.sh"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}
