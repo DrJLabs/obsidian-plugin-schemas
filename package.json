@@ -8,7 +8,8 @@
     "build:enums": "node scripts/build-enum-index.js",
     "validate": "node scripts/validate.js",
     "smoke": "bash scripts/smoke-obsidian.sh",
-    "e2e:calendar": "node scripts/e2e/run-calendar-weekstart.mjs"
+    "e2e:calendar": "node scripts/e2e/run-calendar-weekstart.mjs",
+    "e2e:calendar:local": "node scripts/e2e/run-calendar-local.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
