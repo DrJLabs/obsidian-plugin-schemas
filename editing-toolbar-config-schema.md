@@ -56,7 +56,7 @@ Source Pointers
   "description": "Programmatic configuration for the Editing Toolbar plugin. Based on src/settings/settingsData.ts.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "Command": {
       "type": "object",
       "additionalProperties": true,

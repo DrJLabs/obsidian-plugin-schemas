@@ -57,7 +57,7 @@ Source Pointers
   "description": "Programmatic configuration for Quick Switcher++. Based on src/types/sharedTypes.ts and settings/switcherPlusSettings.ts.",
   "type": "object",
   "additionalProperties": true,
-  "definitions": {
+  "$defs": {
     "Hotkey": {"type": "object", "additionalProperties": true, "properties": {"modifiers": {"type": "array", "items": {"type": "string"}}, "key": {"type": "string"}}},
     "RelationType": {"enum": ["disk-location", "backlink", "outgoing-link"]},
     "TitleSource": {"enum": ["Default", "H1"]},

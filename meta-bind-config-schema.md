@@ -73,7 +73,7 @@ Source Pointers
   "description": "Programmatic configuration for Meta Bind (global data.json). Based on packages/core/src/Settings.ts and packages/core/src/config/*.ts.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "Weekday": {
       "type": "object",
       "additionalProperties": false,

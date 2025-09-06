@@ -12,13 +12,16 @@
 */
 const fs = require('fs');
 const path = require('path');
-const Ajv = require('ajv');
+const Ajv = require('ajv/dist/2020');
 const addFormats = require('ajv-formats');
 
 function findBundle(nameOrId) {
   const files = fs.readdirSync(process.cwd());
-  // direct match
-  if (files.includes(nameOrId)) return nameOrId;
+  // direct match to a file
+  if (files.includes(nameOrId)) {
+    const st = fs.statSync(path.join(process.cwd(), nameOrId));
+    if (st.isFile()) return nameOrId;
+  }
   // try <id>-config-schema.md
   const candidate = files.find((f) => f.endsWith('-config-schema.md') && (f.startsWith(nameOrId + '-') || f.includes(`${nameOrId}-config-schema.md`)));
   if (candidate) return candidate;
@@ -74,4 +77,3 @@ function main() {
 }
 
 main();
-

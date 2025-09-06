@@ -79,7 +79,7 @@ Source Pointers
   "description": "Programmatic configuration for the Homepage plugin. Based on src/settings.ts and src/homepage.ts.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "Period": {"enum": ["Both", "Startup only", "Manual only"]},
     "Mode": {"enum": ["Replace all open notes", "Replace last note", "Keep open notes"]},
     "View": {"enum": ["Default view", "Reading view", "Editing view (Source)", "Editing view (Live Preview)"]},

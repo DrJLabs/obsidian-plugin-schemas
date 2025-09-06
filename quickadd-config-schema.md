@@ -112,7 +112,7 @@ Source Pointers
   "description": "Programmatic configuration for QuickAdd. Based on src/quickAddSettingsTab.ts and related types.",
   "type": "object",
   "additionalProperties": false,
-  "definitions": {
+  "$defs": {
     "AIProvider": {
       "type": "object",
       "additionalProperties": false,
@@ -135,7 +135,7 @@ Source Pointers
       {"type": "object", "properties": {"mode": {"enum": ["source", "default"]}}, "required": ["mode"], "additionalProperties": true}
     ]},
     "AppendLinkOptions": {"type": "object", "properties": {"enabled": {"type": "boolean"}, "placement": {"enum": ["replaceSelection", "afterSelection", "endOfLine", "newLine"]}}, "required": ["enabled", "placement"], "additionalProperties": false},
-    "IChoiceBase": {"type": "object", "properties": {"name": {"type": "string"}, "id": {"type": "string"}, "type": {"enum": ["Capture", "Macro", "Multi", "Template"]}, "command": {"type": "boolean"}, "onePageInput": {"enum": ["always", "never"], "nullable": true}}, "required": ["name", "id", "type", "command"], "additionalProperties": true},
+    "IChoiceBase": {"type": "object", "properties": {"name": {"type": "string"}, "id": {"type": "string"}, "type": {"enum": ["Capture", "Macro", "Multi", "Template"]}, "command": {"type": "boolean"}, "onePageInput": {"anyOf": [{"enum": ["always", "never"]}, {"type": "null"}]}}, "required": ["name", "id", "type", "command"], "additionalProperties": true},
     "CaptureChoice": {
       "allOf": [
         {"$ref": "#/$defs/IChoiceBase"},
