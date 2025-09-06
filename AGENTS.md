@@ -30,6 +30,10 @@ Provide self-contained configuration + JSON Schema bundles for popular Obsidian 
 - Provisioning: generate `data.json` from the bundle’s schema, then place it in the user’s vault path.
 - Validation: use the same embedded schema for linting or CI checks.
 
+## Tools & Checks
+- Static validation: `node scripts/validate.js <bundle|plugin-id> <path/to/data.json>`
+- Runtime smoke (optional): `scripts/smoke-obsidian.sh --bundle <id> --plugin-id <id> --plugin-path <built-plugin-dir> --data <data.json>`
+
 ## Git And Commits
 - Keep the working tree clean; one focused branch per task.
 - Conventional Commits for any changes to root bundles (e.g., `docs(tasks): clarify recurring options`).
