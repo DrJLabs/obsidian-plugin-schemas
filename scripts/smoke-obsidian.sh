@@ -13,10 +13,10 @@ set -euo pipefail
 #     --plugin-path /path/to/quickadd-dist --data sample-data.json
 
 usage() {
-  echo "Usage: $0 --bundle <bundle-id|file> --plugin-id <id> --data <data.json> [--plugin-path <path>] [--source-vault <vault>] [--timeout <secs>] [--no-snapshot]" >&2
+  echo "Usage: $0 --bundle <bundle-id|file> --plugin-id <id> --data <data.json> [--plugin-path <path>] [--source-vault <vault>] [--timeout <secs>] [--no-snapshot] [--snapshot-wait <secs>] [--snapshot-delay <ms>]" >&2
 }
 
-BUNDLE=""; PID=""; PPATH=""; DATA=""; TIMEOUT="15"; VAULT=""; SOURCE_VAULT=""; SNAPSHOT=1;
+BUNDLE=""; PID=""; PPATH=""; DATA=""; TIMEOUT="15"; VAULT=""; SOURCE_VAULT=""; SNAPSHOT=1; SNAP_WAIT=0; SNAP_DELAY=4000;
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --bundle) BUNDLE="$2"; shift 2;;
@@ -26,6 +26,8 @@ while [[ $# -gt 0 ]]; do
     --data) DATA="$2"; shift 2;;
     --timeout) TIMEOUT="$2"; shift 2;;
     --no-snapshot) SNAPSHOT=0; shift 1;;
+    --snapshot-wait) SNAP_WAIT="$2"; shift 2;;
+    --snapshot-delay) SNAP_DELAY="$2"; shift 2;;
     --vault) VAULT="$2"; shift 2;;
     *) echo "Unknown arg: $1"; usage; exit 2;;
   esac
@@ -98,7 +100,7 @@ if [[ "$SNAPSHOT" -eq 1 ]]; then
 {
   "targetPluginId": "$PID",
   "outputPath": ".obsidian/plugins/settings-snapshot/output/${PID}.loaded.json",
-  "delayMs": 4000
+  "delayMs": ${SNAP_DELAY}
 }
 JSON
   # Ensure snapshot plugin is enabled
@@ -113,9 +115,20 @@ JSON
   fi
 fi
 
-xvfb-run -a "$BIN" --vault "$VAULT" &
+SNAP_PATH="$VAULT/.obsidian/plugins/settings-snapshot/output/${PID}.loaded.json"
+
+xvfb-run -a "$BIN" --remote-debugging-port=0 --vault "$VAULT" &
 APP_PID=$!
-sleep "$TIMEOUT"
+# Wait up to max(TIMEOUT, SNAP_WAIT) for snapshot
+MAX_WAIT=$TIMEOUT
+if [[ $SNAP_WAIT -gt $MAX_WAIT ]]; then MAX_WAIT=$SNAP_WAIT; fi
+elapsed=0
+found=0
+while [[ $elapsed -lt $MAX_WAIT ]]; do
+  if [[ -f "$SNAP_PATH" ]]; then found=1; break; fi
+  sleep 1
+  elapsed=$((elapsed+1))
+done
 kill "$APP_PID" >/dev/null 2>&1 || true
 sleep 2
 set -e
@@ -124,12 +137,11 @@ echo "[smoke] Validating persisted data.json after runtime…"
 node scripts/validate.js "$BUNDLE" "$PLDIR/data.json"
 
 if [[ "$SNAPSHOT" -eq 1 ]]; then
-  SNAP_PATH="$VAULT/.obsidian/plugins/settings-snapshot/output/${PID}.loaded.json"
   if [[ -f "$SNAP_PATH" ]]; then
     echo "[smoke] Comparing intended vs loaded settings…"
     node scripts/compare-settings.js "$PLDIR/data.json" "$SNAP_PATH"
   else
-    echo "[smoke] Snapshot output not found (plugin may not have loaded in time): $SNAP_PATH" >&2
+    echo "[smoke] Snapshot output not found after waiting $MAX_WAIT sec: $SNAP_PATH" >&2
     exit 1
   fi
 fi
