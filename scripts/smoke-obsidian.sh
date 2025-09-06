@@ -13,10 +13,10 @@ set -euo pipefail
 #     --plugin-path /path/to/quickadd-dist --data sample-data.json
 
 usage() {
-  echo "Usage: $0 --bundle <bundle-id|file> --plugin-id <id> --plugin-path <path> --data <data.json>" >&2
+  echo "Usage: $0 --bundle <bundle-id|file> --plugin-id <id> --plugin-path <path> --data <data.json> [--timeout <secs>] [--no-snapshot]" >&2
 }
 
-BUNDLE=""; PID=""; PPATH=""; DATA=""; TIMEOUT="15"; VAULT="";
+BUNDLE=""; PID=""; PPATH=""; DATA=""; TIMEOUT="15"; VAULT=""; SNAPSHOT=1;
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --bundle) BUNDLE="$2"; shift 2;;
@@ -24,6 +24,7 @@ while [[ $# -gt 0 ]]; do
     --plugin-path) PPATH="$2"; shift 2;;
     --data) DATA="$2"; shift 2;;
     --timeout) TIMEOUT="$2"; shift 2;;
+    --no-snapshot) SNAPSHOT=0; shift 1;;
     --vault) VAULT="$2"; shift 2;;
     *) echo "Unknown arg: $1"; usage; exit 2;;
   esac
@@ -66,6 +67,21 @@ fi
 
 echo "[smoke] Launching Obsidian headlessly for $TIMEOUT seconds…"
 set +e
+# Install snapshot helper unless disabled
+if [[ "$SNAPSHOT" -eq 1 ]]; then
+  SPDIR="$VAULT/.obsidian/plugins/settings-snapshot"
+  mkdir -p "$SPDIR/output"
+  rsync -a --delete helpers/settings-snapshot-plugin/ "$SPDIR/"
+  # Configure target and output
+  cat > "$SPDIR/data.json" <<JSON
+{
+  "targetPluginId": "$PID",
+  "outputPath": ".obsidian/plugins/settings-snapshot/output/${PID}.loaded.json",
+  "delayMs": 4000
+}
+JSON
+fi
+
 xvfb-run -a "$BIN" --vault "$VAULT" &
 APP_PID=$!
 sleep "$TIMEOUT"
@@ -75,5 +91,16 @@ set -e
 
 echo "[smoke] Validating persisted data.json after runtime…"
 node scripts/validate.js "$BUNDLE" "$PLDIR/data.json"
-echo "[smoke] OK"
 
+if [[ "$SNAPSHOT" -eq 1 ]]; then
+  SNAP_PATH="$VAULT/.obsidian/plugins/settings-snapshot/output/${PID}.loaded.json"
+  if [[ -f "$SNAP_PATH" ]]; then
+    echo "[smoke] Comparing intended vs loaded settings…"
+    node scripts/compare-settings.js "$PLDIR/data.json" "$SNAP_PATH"
+  else
+    echo "[smoke] Snapshot output not found (plugin may not have loaded in time): $SNAP_PATH" >&2
+    exit 1
+  fi
+fi
+
+echo "[smoke] OK"

@@ -3,6 +3,7 @@
 Thumbs.db
 *.log
 node_modules/
+.tmp/
 # Obsidian cache
 .obsidian/workspace.json
 # Ignore nested git metadata from cloned plugin repos

@@ -1,0 +1,11 @@
+{
+  "id": "settings-snapshot",
+  "name": "Settings Snapshot",
+  "version": "0.1.0",
+  "minAppVersion": "1.4.0",
+  "description": "Writes current settings of a target plugin to a file for validation.",
+  "author": "DrJLabs",
+  "isDesktopOnly": true,
+  "main": "main.js"
+}
+
